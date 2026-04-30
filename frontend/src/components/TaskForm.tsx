@@ -43,6 +43,7 @@ export default function TaskForm({ onAddTask, ref }: Props) {
       <select
         name="priority"
         defaultValue="Medium"
+        aria-label="Task priority"
         className="border p-2 rounded"
       >
         <option value="High">High</option>

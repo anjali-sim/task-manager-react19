@@ -45,11 +45,12 @@ app.put("/tasks/:id", async (req, res) => {
   if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({ message: "Invalid task ID" });
   }
+  const taskId = new mongoose.Types.ObjectId(req.params.id);
   const { title, completed, priority } = req.body;
   const sanitizedPriority =
     priority && VALID_PRIORITIES.includes(priority) ? priority : undefined;
   const updatedTask = await Task.findByIdAndUpdate(
-    req.params.id,
+    taskId,
     { title, completed, ...(sanitizedPriority && { priority: sanitizedPriority }) },
     { new: true }
   );
@@ -62,7 +63,8 @@ app.delete("/tasks/:id", async (req, res) => {
   if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({ message: "Invalid task ID" });
   }
-  const deleted = await Task.findByIdAndDelete(req.params.id);
+  const taskId = new mongoose.Types.ObjectId(req.params.id);
+  const deleted = await Task.findByIdAndDelete(taskId);
   if (!deleted) return res.status(404).json({ message: "Not found" });
   res.status(204).end();
 });
@@ -72,7 +74,8 @@ app.get("/tasks/:id", async (req, res) => {
   if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({ message: "Invalid task ID" });
   }
-  const task = await Task.findById(req.params.id);
+  const taskId = new mongoose.Types.ObjectId(req.params.id);
+  const task = await Task.findById(taskId);
   if (!task) return res.status(404).json({ message: "Not found" });
   res.json(task);
 });
