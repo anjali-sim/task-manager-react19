@@ -5,6 +5,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dueDate: {
+    type: Date,
+    default: null,
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.models.Task || mongoose.model("Task", taskSchema);

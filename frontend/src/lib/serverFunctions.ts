@@ -11,9 +11,10 @@ export async function fetchTasks(): Promise<Task[]> {
 
 export async function createTask(formData: FormData): Promise<Task> {
   const title = formData.get("title")?.toString();
+  const dueDate = formData.get("dueDate")?.toString() || undefined;
   const res = await fetch(`${BASE_URL}/tasks`, {
     method: "POST",
-    body: JSON.stringify({ title }),
+    body: JSON.stringify({ title, dueDate }),
     headers: {
       "Content-Type": "application/json",
     },
