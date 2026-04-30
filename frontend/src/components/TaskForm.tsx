@@ -33,20 +33,28 @@ export default function TaskForm({ onAddTask, ref }: Props) {
   });
 
   return (
-    <form action={formAction} className="flex gap-2 mb-4">
+    <form action={formAction} className="flex flex-col gap-2 mb-4">
+      <div className="flex gap-2">
+        <input
+          ref={ref}
+          name="title"
+          className="border p-2 w-full"
+          placeholder="New task"
+        />
+        <button
+          type="submit"
+          disabled={pending}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          {pending ? "Adding..." : "Add"}
+        </button>
+      </div>
       <input
-        ref={ref}
-        name="title"
+        type="date"
+        name="dueDate"
         className="border p-2 w-full"
-        placeholder="New task"
+        aria-label="Due date"
       />
-      <button
-        type="submit"
-        disabled={pending}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        {pending ? "Adding..." : "Add"}
-      </button>
       {state.message && (
         <p className={state.isError ? "text-red-600" : "text-green-600"}>
           {state.message}
@@ -55,3 +63,4 @@ export default function TaskForm({ onAddTask, ref }: Props) {
     </form>
   );
 }
+
