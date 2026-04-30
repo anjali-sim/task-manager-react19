@@ -1,0 +1,3 @@
+- Always use Typescript with strict type checking
+- Follow the project's ESLint and Prettier configuration.
+- Use the existing codebase and file structure as a guide for where to add new code.
