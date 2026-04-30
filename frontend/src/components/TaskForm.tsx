@@ -5,18 +5,32 @@ type Props = {
   ref: React.RefObject<HTMLInputElement | null>;
 };
 
+type FormState = {
+  message: string;
+  isError: boolean;
+};
+
 export default function TaskForm({ onAddTask, ref }: Props) {
   const createTaskAction = async (
-    _: string,
+    _: FormState,
     formData: FormData
-  ): Promise<string> => {
-    const title = formData.get("title")?.toString();
-    if (!title) return "Title is required";
+  ): Promise<FormState> => {
+    const title = (formData.get("title")?.toString() ?? "").trim();
+    if (!title) return { message: "Title is required", isError: true };
+    if (title.length < 3)
+      return {
+        message: "Title must be at least 3 characters",
+        isError: true,
+      };
+    formData.set("title", title);
     await onAddTask(formData);
-    return "Task created successfully!";
+    return { message: "Task created successfully!", isError: false };
   };
 
-  const [message, formAction, pending] = useActionState(createTaskAction, "");
+  const [state, formAction, pending] = useActionState(createTaskAction, {
+    message: "",
+    isError: false,
+  });
 
   return (
     <form action={formAction} className="flex gap-2 mb-4">
@@ -25,7 +39,6 @@ export default function TaskForm({ onAddTask, ref }: Props) {
         name="title"
         className="border p-2 w-full"
         placeholder="New task"
-        required
       />
       <button
         type="submit"
@@ -34,7 +47,11 @@ export default function TaskForm({ onAddTask, ref }: Props) {
       >
         {pending ? "Adding..." : "Add"}
       </button>
-      {message && <p className="text-green-600">{message}</p>}
+      {state.message && (
+        <p className={state.isError ? "text-red-600" : "text-green-600"}>
+          {state.message}
+        </p>
+      )}
     </form>
   );
 }
