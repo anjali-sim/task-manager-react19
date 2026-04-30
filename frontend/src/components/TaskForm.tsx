@@ -33,13 +33,23 @@ export default function TaskForm({ onAddTask, ref }: Props) {
   });
 
   return (
-    <form action={formAction} className="flex gap-2 mb-4">
+    <form action={formAction} className="flex gap-2 mb-4 flex-wrap">
       <input
         ref={ref}
         name="title"
-        className="border p-2 w-full"
+        className="border p-2 flex-grow"
         placeholder="New task"
       />
+      <select
+        name="priority"
+        defaultValue="Medium"
+        aria-label="Task priority"
+        className="border p-2 rounded"
+      >
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
       <button
         type="submit"
         disabled={pending}

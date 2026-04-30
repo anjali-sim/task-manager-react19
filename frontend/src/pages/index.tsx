@@ -13,7 +13,7 @@ import {
   deleteTask,
   updateTask,
 } from "../lib/serverFunctions";
-import type { Task } from "../types";
+import type { Task, Priority } from "../types";
 
 export const prerender = true;
 
@@ -92,6 +92,7 @@ export default function Home() {
             _id: Date.now().toString(),
             title: formData.get("title")?.toString() ?? "",
             completed: false,
+            priority: (formData.get("priority")?.toString() as Priority) ?? "Medium",
           };
           addOptimisticTask(fakeTask);
           await handleAddTask(formData);
