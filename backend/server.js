@@ -26,17 +26,17 @@ app.get("/tasks", async (req, res) => {
 
 // POST a new task
 app.post("/tasks", async (req, res) => {
-  const { title } = req.body;
-  const newTask = await Task.create({ title });
+  const { title, priority } = req.body;
+  const newTask = await Task.create({ title, priority });
   res.status(201).json(newTask);
 });
 
 // PUT (update) a task
 app.put("/tasks/:id", async (req, res) => {
-  const { title } = req.body;
+  const { title, completed, priority } = req.body;
   const updatedTask = await Task.findByIdAndUpdate(
     req.params.id,
-    { title },
+    { title, completed, priority },
     { new: true }
   );
   if (!updatedTask) return res.status(404).json({ message: "Not found" });
