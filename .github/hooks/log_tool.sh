@@ -1,3 +1,3 @@
 #!/bin/bash
-mkdir -p ~/hook_logs
-echo "[$(date)] TOOL: $TOOL_NAME" >> ~/hook_logs/tool_executions.log
+mkdir -p ~/.github/hooks/logs
+echo "[$(date)] TOOL: $TOOL_NAME" >> ~/.github/hooks/logs/tool_executions.log
