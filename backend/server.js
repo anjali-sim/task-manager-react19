@@ -26,8 +26,8 @@ app.get("/tasks", async (req, res) => {
 
 // POST a new task
 app.post("/tasks", async (req, res) => {
-  const { title } = req.body;
-  const newTask = await Task.create({ title });
+  const { title, dueDate } = req.body;
+  const newTask = await Task.create({ title, dueDate: dueDate || null });
   res.status(201).json(newTask);
 });
 

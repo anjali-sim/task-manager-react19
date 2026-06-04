@@ -44,6 +44,11 @@ export default function TaskList({ tasks, onDelete, onUpdate }: Props) {
                 >
                   {task.title}
                 </span>
+                {task.dueDate && !isNaN(new Date(task.dueDate).getTime()) && (
+                  <span className="text-sm text-gray-400">
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </span>
+                )}
               </div>
               <div className="flex gap-2">
                 <button
